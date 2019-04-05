@@ -502,51 +502,31 @@ describe('app module', () => {
     })
   })
 
-  describe('app.setBadgeCount', () => {
+  describe('app.badgeCount', () => {
     const platformIsNotSupported =
         (process.platform === 'win32') ||
         (process.platform === 'linux' && !app.isUnityRunning())
     const platformIsSupported = !platformIsNotSupported
 
     const expectedBadgeCount = 42
-    let returnValue: boolean | null = null
 
-    beforeEach(() => { returnValue = app.setBadgeCount(expectedBadgeCount) })
-
-    after(() => {
-      // Remove the badge.
-      app.setBadgeCount(0)
-    })
+    after(() => { app.badgeCount = 0 })
 
     describe('on supported platform', () => {
-      before(function () {
-        if (platformIsNotSupported) {
-          this.skip()
-        }
-      })
-
-      it('returns true', () => {
-        expect(returnValue).to.equal(true)
-      })
-
       it('sets a badge count', () => {
-        expect(app.getBadgeCount()).to.equal(expectedBadgeCount)
+        if (platformIsNotSupported) this.skip()
+
+        app.badgeCount = expectedBadgeCount
+        expect(app.badgeCount).to.equal(expectedBadgeCount)
       })
     })
 
     describe('on unsupported platform', () => {
-      before(function () {
-        if (platformIsSupported) {
-          this.skip()
-        }
-      })
-
-      it('returns false', () => {
-        expect(returnValue).to.equal(false)
-      })
-
       it('does not set a badge count', () => {
-        expect(app.getBadgeCount()).to.equal(0)
+        if (platformIsSupported) this.skip()
+
+        app.badgeCount = 9999
+        expect(app.badgeCount).to.equal(0)
       })
     })
   })

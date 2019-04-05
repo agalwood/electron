@@ -1350,8 +1350,8 @@ void App::BuildPrototype(v8::Isolate* isolate,
                  base::Bind(&Browser::SetAsDefaultProtocolClient, browser))
       .SetMethod("removeAsDefaultProtocolClient",
                  base::Bind(&Browser::RemoveAsDefaultProtocolClient, browser))
-      .SetMethod("setBadgeCount", base::Bind(&Browser::SetBadgeCount, browser))
-      .SetMethod("getBadgeCount", base::Bind(&Browser::GetBadgeCount, browser))
+      .SetMethod("_setBadgeCount", base::Bind(&Browser::SetBadgeCount, browser))
+      .SetMethod("_getBadgeCount", base::Bind(&Browser::GetBadgeCount, browser))
       .SetMethod("getLoginItemSettings", &App::GetLoginItemSettings)
       .SetMethod("setLoginItemSettings",
                  base::Bind(&Browser::SetLoginItemSettings, browser))
@@ -1377,6 +1377,8 @@ void App::BuildPrototype(v8::Isolate* isolate,
                  base::Bind(&Browser::SetAboutPanelOptions, browser))
       .SetMethod("showAboutPanel",
                  base::Bind(&Browser::ShowAboutPanel, browser))
+      .SetProperty("badgeCount", base::Bind(&Browser::GetBadgeCount, browser),
+                   base::Bind(&Browser::SetBadgeCount, browser))
 #endif
 #if defined(OS_MACOSX) || defined(OS_WIN)
       .SetMethod("showEmojiPanel",
