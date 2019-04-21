@@ -249,4 +249,8 @@ void Browser::NewWindowForTab() {
 }
 #endif
 
+void Browser::EnableSecureMode() {
+  secure_mode_enabled_ = true;
+}
+
 }  // namespace atom

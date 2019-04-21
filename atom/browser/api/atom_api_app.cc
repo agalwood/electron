@@ -1268,6 +1268,23 @@ void App::EnableSandbox(mate::Arguments* args) {
   command_line->AppendSwitch(switches::kEnableSandbox);
 }
 
+// static
+void App::EnableSecureMode(mate::Arguments* args) {
+  if (Browser::Get()->is_ready()) {
+    args->ThrowError(
+        "app.enableSecureMode() can only be called "
+        "before app is ready");
+    return;
+  }
+
+  Browser::Get()->EnableSecureMode();
+}
+
+// static
+bool App::IsSecureModeEnabled() {
+  return Browser::Get()->secure_mode_enabled();
+}
+
 #if defined(OS_MACOSX)
 bool App::MoveToApplicationsFolder(mate::Arguments* args) {
   return ui::cocoa::AtomBundleMover::Move(args);
@@ -1428,7 +1445,9 @@ void App::BuildPrototype(v8::Isolate* isolate,
 #if defined(OS_MACOSX)
       .SetProperty("dock", &App::GetDockAPI)
 #endif
-      .SetMethod("enableSandbox", &App::EnableSandbox);
+      .SetMethod("enableSandbox", &App::EnableSandbox)
+      .SetMethod("enableSecureMode", &App::EnableSecureMode)
+      .SetProperty("secureModeEnabled", &App::IsSecureModeEnabled);
 }
 
 }  // namespace api

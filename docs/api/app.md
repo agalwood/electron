@@ -1252,6 +1252,12 @@ Returns `String` - The command-line switch value.
 
 **Note:** When the switch is not present or has no value, it returns empty string.
 
+### `app.enableSecureMode()` _Experimental_
+
+Enables [secure mode](secure-mode.md).
+
+This method can only be called before app is ready.
+
 ### `app.enableSandbox()` _Experimental_
 
 Enables full sandbox mode on the app.
@@ -1362,6 +1368,10 @@ This API must be called after the `ready` event is emitted.
 ### `app.isPackaged`
 
 A `Boolean` property that returns  `true` if the app is packaged, `false` otherwise. For many apps, this property can be used to distinguish development and production environments.
+
+### `app.secureModeEnabled`
+
+A `Boolean` property that returns `true` if [secure mode](secure-mode.md) is enabled, `false` otherwise.
 
 [dock-menu]:https://developer.apple.com/macos/human-interface-guidelines/menus/dock-menus/
 [tasks]:https://msdn.microsoft.com/en-us/library/windows/desktop/dd378460(v=vs.85).aspx#tasks
